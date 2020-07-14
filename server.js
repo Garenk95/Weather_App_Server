@@ -63,7 +63,7 @@ app.get(`/5_day_forecast_with_IP/:ip`, async (req, res) => {
     };
     var key = "this didnt work";
     const promise = new Promise((resolve, reject) => {
-        console.log(`Fetching location key for IP Address: ${req.params.ip}`);
+        console.log(`Fetching location key for IP Address (3): ${req.params.ip}`);
 
         serverCache['5_day_forecast_with_IP'] = serverCache['5_day_forecast_with_IP'] || {};
         const cacheExists = serverCache['5_day_forecast_with_IP'][req.params.ip];
@@ -75,9 +75,9 @@ app.get(`/5_day_forecast_with_IP/:ip`, async (req, res) => {
                 .then(response => response.text())
                 .then(result => {
                     var obj = JSON.parse(result);
-                    console.log(`Retrieved location key for IP Address: ${req.params.ip}`);
+                    console.log(`Retrieved location key for IP Address (4): ${req.params.ip}`);
                     key = obj.Key;
-                    console.log(`Fetchin 5 day forecast for IP Address: ${req.params.ip}`);
+                    console.log(`Fetchin 5 day forecast for IP Address (5): ${req.params.ip}`);
                     fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=${apiKey}&language=en-us&details=false&metric=false`, requestOptions)
                         .then(response => response.text())
                         .then(result => {
