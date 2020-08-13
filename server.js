@@ -1,7 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const fetch = require("node-fetch");
-const weather_database = require("./database/weather_database");
+const express = require('express');
+const cors = require('cors');
+const fetch = require('node-fetch');
+const weather_database = require('./database/weather_database');
 
 const app = express();
 const port = 3000;
@@ -10,7 +10,7 @@ app.listen(port, () =>
 );
 app.use(cors());
 
-const apiKey = "O1XAGUnPQv0VxIiDzQTITaBbUAX1aH7n";
+const apiKey = 'O1XAGUnPQv0VxIiDzQTITaBbUAX1aH7n';
 //const apiKey = "ZSTWOA1o8MlVaxWo79PfdAqvYYeEU8gJ";
 //const apiKey = 'JSAz93UV0ixfmyqkwA4vlbNx1FB3KCdA';
 
@@ -19,18 +19,18 @@ let serverCache = {};
 //"type" paramater should be a string that is either "zip" or "ip"
 async function getLocationKey(param, type) {
     let url = `http://dataservice.accuweather.com`;
-    if (type === "zip") {
+    if (type === 'zip') {
         //url for zip code
         url =
             url +
             `/locations/v1/postalcodes/search?apikey=${apiKey}&q=${param}&language=en-us&details=false`;
-    } else if (type === "ip") {
+    } else if (type === 'ip') {
         //url for ip address
         url =
             url +
             `/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${param}&language=en-us&details=false`;
     } else {
-        console.log("In getLocationKey()... incorrect type has been provided");
+        console.log('In getLocationKey()... incorrect type has been provided');
     }
     const promise = new Promise((resolve, reject) => {
         fetch(url)
@@ -95,7 +95,7 @@ app.get(`/current_conditions_with_IP/:ip`, async (req, res) => {
         req.params.ip
     ))
         ? await weather_database.get_location_key(req.params.ip)
-        : await getLocationKey(req.params.ip, "ip");
+        : await getLocationKey(req.params.ip, 'ip');
 
     res.send(await getCurrentConditions(locationKey));
 });
@@ -105,7 +105,7 @@ app.get(`/5_day_forecast_with_IP/:ip`, async (req, res) => {
         req.params.ip
     ))
         ? await weather_database.get_location_key(req.params.ip)
-        : await getLocationKey(req.params.ip, "ip");
+        : await getLocationKey(req.params.ip, 'ip');
 
     res.send(await getFiveDayForecast(locationKey));
 });
