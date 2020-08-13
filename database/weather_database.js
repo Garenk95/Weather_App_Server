@@ -1,20 +1,19 @@
-var mysql = require('mysql');
+var mysql = require("mysql");
 
 function isEmpty(obj) {
     for (var key in obj) {
-        if (obj.hasOwnProperty(key))
-            return false;
+        if (obj.hasOwnProperty(key)) return false;
     }
     return true;
 }
 
 function connectToDatabase() {
     var con = mysql.createConnection({
-        host: 'localhost',
-        user: 'garen1',
-        port: '8889',
-        password: '',
-        database: 'Weather_App'
+        host: "localhost",
+        user: "garen1",
+        port: "8889",
+        password: "",
+        database: "Weather_App",
     });
     con.connect(function (err) {
         if (err) throw err;
@@ -24,7 +23,6 @@ function connectToDatabase() {
 }
 
 module.exports = {
-
     location_key_exists: async (param) => {
         const connection = connectToDatabase();
         var sql = `SELECT * FROM location_keys_V2 WHERE param = '${param}'`;
@@ -42,7 +40,7 @@ module.exports = {
                 }
             });
         });
-        console.log('...ending connection to database');
+        console.log("...ending connection to database");
         connection.end();
         return await promise;
     },
@@ -54,14 +52,13 @@ module.exports = {
             connection.query(sql, (err, res) => {
                 if (err) {
                     console.log(err);
-                }
-                else {
-                    console.log('Returning location key from database');
+                } else {
+                    console.log("Returning location key from database");
                     resolve(res[0].location_key);
                 }
             });
         });
-        console.log('...ending connection to database');
+        console.log("...ending connection to database");
         connection.end();
         return await promise;
     },
@@ -72,12 +69,13 @@ module.exports = {
         connection.query(sql, (err, res) => {
             if (err) {
                 console.log(err);
-            }
-            else {
-                console.log(`Stored Location Key: ${key} and Param: ${param} in table `);
+            } else {
+                console.log(
+                    `Stored Location Key: ${key} and Param: ${param} in table `
+                );
             }
         });
-        console.log('...ending connection to database');
+        console.log("...ending connection to database");
         connection.end();
-    }
+    },
 };
